@@ -6,11 +6,9 @@ import ru.job4j.puzzle.firuges.Figure;
 import java.util.Arrays;
 
 /**
- * //TODO add comments.
- *
- * @author Petr Arsentev (parsentev@yandex.ru)
- * @version $Id$
- * @since 0.1
+ * @author Petr Arsentev | Aleksei Usov
+ * @version 1.0
+ * @since 08.02.2020
  */
 public class Logic {
     private final int size;
@@ -68,9 +66,46 @@ public class Logic {
         return rst;
     }
 
+    //метод проверяет наличие кружков в одной строке игрового поля
+    public static boolean monoHorizontal(int[][] table, int row) {
+        boolean result = true;
+        for (int j = 0; j != table[0].length; j++) {
+            if (table[row][j] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    //метод проверяет наличие кружков в одном столбце игрового поля
+    public static boolean monoVertical(int[][] table, int column) {
+        boolean result = true;
+        for (int i = 0; i != table.length; i++) {
+            if (table[i][column] != 1) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
+        for (int i = 0; i != table.length; i++) {
+
+            //проверяем наличие кружка (символ 1) в диагонали матрицы
+            if (table[i][i] == 1) {
+
+                //если в диагонали игрового поля есть кружок (символ 1) прроверяем заполненность соотвтетствующей строки или столбца символом кружком (1)
+                if (monoHorizontal(table, i) || monoVertical(table, i)) {
+                    result = true;
+                    break;
+                }
+            }
+        }
         return result;
     }
 
