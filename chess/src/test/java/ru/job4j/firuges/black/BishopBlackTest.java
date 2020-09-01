@@ -1,6 +1,8 @@
 package ru.job4j.firuges.black;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.black.BishopBlack;
@@ -27,6 +29,27 @@ public class BishopBlackTest {
         Cell movePosition = bishopBlackMove.position();
         Cell expectedPosition = Cell.F4;
         assertThat(movePosition, is(expectedPosition));
+    }
+
+    //chek way from position to dest
+    @Test
+    public void wayFromPositionToDest() {
+        BishopBlack bishopBlack = new BishopBlack(Cell.C1);
+        Cell[] bishopWay = bishopBlack.way(Cell.C1, Cell.G5);
+        Cell[] expectedWay = {Cell.D2, Cell.E3, Cell.F4, Cell.G5};
+        assertThat(bishopWay, is(expectedWay));
+    }
+
+    //check exception when not diagonal
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void whenIsNotDiagonalStep() {
+        BishopBlack bishopBlack = new BishopBlack(Cell.C1);
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("Could not way by diagonal from C1 to C5");
+        Cell[] bishopWay = bishopBlack.way(Cell.C1, Cell.C5);
     }
 }
 
