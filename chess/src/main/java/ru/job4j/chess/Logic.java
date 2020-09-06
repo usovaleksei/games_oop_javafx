@@ -1,10 +1,12 @@
 package ru.job4j.chess;
 
+import ru.job4j.chess.exceptions.FigureNotFoundException;
+import ru.job4j.chess.exceptions.ImpossibleMoveException;
+import ru.job4j.chess.exceptions.OccupiedCellException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * chess logic: add figure, move figure, clean cell, find cell
@@ -22,20 +24,24 @@ public class Logic {
     }
 
     //move figure
-    public boolean move(Cell source, Cell dest) {
-        boolean rst = false;
-        int index = this.findBy(source);
-        if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
-            }
+    public void move(Cell source, Cell dest)
+            throws FigureNotFoundException, ImpossibleMoveException, OccupiedCellException {
+        int index = findBy(source);
+        if (index == -1) {
+            throw new FigureNotFoundException();
         }
-        return rst;
+        Cell[] steps = figures[index].way(dest);
+        free(steps);
+        figures[index] = figures[index].copy(dest);
     }
 
+    //check free cells to figure way
     private boolean free(Cell[] steps) throws OccupiedCellException {
+        for (Cell cell : steps) {
+            if (findBy(cell) != -1) {
+                throw new OccupiedCellException();
+            }
+        }
         return true;
     }
 

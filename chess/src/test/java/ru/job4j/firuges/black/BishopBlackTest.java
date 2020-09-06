@@ -31,11 +31,11 @@ public class BishopBlackTest {
         assertThat(movePosition, is(expectedPosition));
     }
 
-    //chek way from position to dest
+    //check way from position to dest
     @Test
     public void wayFromPositionToDest() {
         BishopBlack bishopBlack = new BishopBlack(Cell.C1);
-        Cell[] bishopWay = bishopBlack.way(Cell.C1, Cell.G5);
+        Cell[] bishopWay = bishopBlack.way(Cell.G5);
         Cell[] expectedWay = {Cell.D2, Cell.E3, Cell.F4, Cell.G5};
         assertThat(bishopWay, is(expectedWay));
     }
@@ -49,7 +49,7 @@ public class BishopBlackTest {
         BishopBlack bishopBlack = new BishopBlack(Cell.C1);
         exception.expect(IllegalStateException.class);
         exception.expectMessage("Could not way by diagonal from C1 to C5");
-        Cell[] bishopWay = bishopBlack.way(Cell.C1, Cell.C5);
+        Cell[] bishopWay = bishopBlack.way(Cell.C5);
     }
 }
 
