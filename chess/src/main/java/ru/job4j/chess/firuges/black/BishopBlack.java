@@ -6,7 +6,7 @@ import ru.job4j.chess.firuges.Figure;
 /**
  * @author Aleksei Usov (usalekse@gmail.com)
  * @version 1.0
- * @since 24/08/2020
+ * @since 07/09/2020
  */
 public class BishopBlack implements Figure {
     private final Cell position;
@@ -30,10 +30,13 @@ public class BishopBlack implements Figure {
         }
         int size = Math.abs(dest.x - position.x);
         Cell[] steps = new Cell[size];
-        int deltaX = (dest.x - position.x) > 0 ? 1 : - 1;
-        int deltaY = (dest.y - position.y) > 0 ? 1 : - 1;
+        int x = position.x, y = position.y;
+        int deltaX = (dest.x - x) > 0 ? 1 : - 1;
+        int deltaY = (dest.y - y) > 0 ? 1 : - 1;
         for (int index = 0; index < size; index++) {
-            steps[index] = Cell.findBy(position.x + (index + 1) * deltaX, position.y + (index + 1) * deltaY);
+            x += deltaX;
+            y += deltaY;
+            steps[index] = Cell.findBy(x, y);
         }
         return steps;
     }

@@ -12,7 +12,7 @@ import java.util.Arrays;
  * chess logic: add figure, move figure, clean cell, find cell
  * @author Aleksei Usov (usalekse@gmail.com)
  * @version 1.0
- * @since 24/08/2020
+ * @since 07/09/2020
  */
 public class Logic {
     private final Figure[] figures = new Figure[32];
@@ -31,8 +31,9 @@ public class Logic {
             throw new FigureNotFoundException();
         }
         Cell[] steps = figures[index].way(dest);
-        free(steps);
-        figures[index] = figures[index].copy(dest);
+        if(free(steps)) {
+            figures[index] = figures[index].copy(dest);
+        }
     }
 
     //check free cells to figure way
